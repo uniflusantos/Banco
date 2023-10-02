@@ -88,3 +88,67 @@ void listar_contas(int cont, struct contas *t){
         printf("Senha: %s\n\n", t[x].senha);
     }
 }
+
+int deletar(long cpf, int cont, struct contas *t) {
+    //printf("Entre com o CPF que vpcê deseja deletar: ");
+    //scanf("%ld", &cpf);
+    //buscar_cpf(cpf_recebido, armazena,cont);
+    int teste;
+    do {
+        printf("Entre com o CPF que voce deseja deletar:  \n");
+        scanf("%ld", &cpf);
+        teste = buscar_cpf(cpf, t, cont);
+        if (teste == -1) {
+            printf("CPF inexistente, tente novamente.\n");
+        }
+    } while (teste == -1);
+
+    for (int i = teste; i < cont; i++) {
+        t[i] = t[i + 1];
+    }
+    printf("Conta deletada !\n");
+    return 0;
+
+
+
+
+
+
+
+    /**
+    char *p_posicao, s_posicao[100];
+    fgets(s_posicao, sizeof(s_posicao), stdin);
+
+    posicao = strtol(s_posicao, &p_posicao, 10);
+    if(p_posicao == s_posicao || *p_posicao != '\n') {
+        printf("Input invalido. Entre somente com numeros inteiros.\n\n");
+        return 1;
+    }
+    else if(posicao <= 0 && cont > 1 || posicao > cont && cont > 1){
+        printf("Numero invalido! Entre um numero entre 1 e %d\n\n", cont);
+        return 1;
+    }
+    else if(cont == 0){
+        printf("Voce nao tem nenhuma tarefa registrada.\n\n");
+        return 1;
+    }
+    else if(posicao <= 0 && cont == 1 || posicao > cont && cont == 1){
+        printf("Numero invalido! Voce tem somente 1 tarefa registrada.\n\n");
+        return 1;
+    }
+    else{
+        //printf("erro\n");
+        //printf("%d\n",posicao - 1);
+        //printf("%d\n",cont);
+        for(int i = posicao - 1; i < cont ; i++){
+            //printf("%d\n", i);
+            //printf("%d\n", posicao);
+            //printf("%d\n", cont);
+            t[i] = t[i + 1];
+        }
+        printf("Tarefa deletada\n\n");
+        return 0;
+    }
+}
+**/
+}

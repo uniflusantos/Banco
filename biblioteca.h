@@ -13,7 +13,8 @@ struct contas{
     char senha[100];
 };
 
-int verifica_cpf(long cpf, struct contas *armazena,int cont);
+
+
 int buscar_cpf(long cpf, struct contas*t, int cont);
 
 
@@ -23,4 +24,5 @@ int le_informacoes(struct contas *armazena, int cont);
 
 void listar_contas(int cont, struct contas *t);
 
+int deletar(long cpf, int cont, struct contas *t);
 #endif //UNTITLED_BIBLIOTECA_H
