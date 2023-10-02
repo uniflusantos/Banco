@@ -50,6 +50,8 @@ int main(void) {
 
         else if (opcao == 4) {
             printf("\nVoce entrou na funcao de realizar debitos.\n");
+            debitar(t[cont].cpf,cont,t);
+
         } else if (opcao == 5) {
             printf("\nVoce entrou na funcao de realizar depositos.\n");
         } else if (opcao == 6) {

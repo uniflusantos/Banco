@@ -15,13 +15,15 @@ int buscar_cpf(long cpf, struct contas*t, int cont){
         if(t[i].cpf == cpf){
             saida = i;
         }
-        printf("indice :%d \n", i);
-        printf("cpf1: %ld \n", t[i].cpf);
-        printf("cpf2: %ld \n", cpf);
-        printf("saida %d \n", saida);
+        //printf("indice :%d \n", i);
+        //printf("cpf1: %ld \n", t[i].cpf);
+        //printf("cpf2: %ld \n", cpf);
+        //printf("saida %d \n", saida);
     }
     return saida;
 }
+
+
 
 /**int verifica_cpf(long cpf, struct contas *armazena,int cont){
   int saida =0;
@@ -78,17 +80,6 @@ int le_informacoes(struct contas *armazena, int cont){
 
 
 
-void listar_contas(int cont, struct contas *t){
-    for(int x = 0; x < cont; x++){
-        printf("Conta %d\n", x + 1);
-        printf("Nome: %s\n", t[x].nome);
-        printf("CPF: %ld\n", t[x].cpf);
-        printf("Tipo de conta: %d\n", t[x].tipo_conta);
-        printf("Valor inicial: %d\n", t[x].valor_inicial);
-        printf("Senha: %s\n\n", t[x].senha);
-    }
-}
-
 int deletar(long cpf, int cont, struct contas *t) {
     //printf("Entre com o CPF que vpcê deseja deletar: ");
     //scanf("%ld", &cpf);
@@ -98,6 +89,7 @@ int deletar(long cpf, int cont, struct contas *t) {
         printf("Entre com o CPF que voce deseja deletar:  \n");
         scanf("%ld", &cpf);
         teste = buscar_cpf(cpf, t, cont);
+        //printf("posicao delete: %d\n",teste);
         if (teste == -1) {
             printf("CPF inexistente, tente novamente.\n");
         }
@@ -109,46 +101,54 @@ int deletar(long cpf, int cont, struct contas *t) {
     printf("Conta deletada !\n");
     return 0;
 
+}
 
-
-
-
-
-
-    /**
-    char *p_posicao, s_posicao[100];
-    fgets(s_posicao, sizeof(s_posicao), stdin);
-
-    posicao = strtol(s_posicao, &p_posicao, 10);
-    if(p_posicao == s_posicao || *p_posicao != '\n') {
-        printf("Input invalido. Entre somente com numeros inteiros.\n\n");
-        return 1;
+void listar_contas(int cont, struct contas *t){
+    for(int x = 0; x < cont; x++){
+        printf("Conta %d\n", x + 1);
+        printf("Nome: %s\n", t[x].nome);
+        printf("CPF: %ld\n", t[x].cpf);
+        printf("Tipo de conta: %d\n", t[x].tipo_conta);
+        printf("Valor inicial: %d\n", t[x].valor_inicial);
+        printf("Senha: %s\n\n", t[x].senha);
     }
-    else if(posicao <= 0 && cont > 1 || posicao > cont && cont > 1){
-        printf("Numero invalido! Entre um numero entre 1 e %d\n\n", cont);
-        return 1;
+}
+
+
+void debitar(long cpf, int cont, struct contas *t){
+    int aux;
+
+    printf("Entre com o CPF que você deseja debitar um saldo: ");
+    scanf("%ld", &cpf);
+    printf("\n");
+    aux = buscar_cpf(cpf, t, cont);
+    //printf(" posicao: %d\n",aux);
+    if(aux == -1){
+        printf("CPF inexistente.\n");
     }
-    else if(cont == 0){
-        printf("Voce nao tem nenhuma tarefa registrada.\n\n");
-        return 1;
-    }
-    else if(posicao <= 0 && cont == 1 || posicao > cont && cont == 1){
-        printf("Numero invalido! Voce tem somente 1 tarefa registrada.\n\n");
-        return 1;
-    }
+
+
+
     else{
-        //printf("erro\n");
-        //printf("%d\n",posicao - 1);
-        //printf("%d\n",cont);
-        for(int i = posicao - 1; i < cont ; i++){
-            //printf("%d\n", i);
-            //printf("%d\n", posicao);
-            //printf("%d\n", cont);
-            t[i] = t[i + 1];
+        char senha_[200];
+        printf("Digite a senha: ");
+        scanf("%s",senha_);
+        int r = strcmp (senha_,t[aux].senha);
+        if(r == 0){
+            int valor;
+            printf("Digite o valor que você deseja debitar: ");
+            scanf("%d", &valor);
+            //printf("posicao: %d\n", aux);
+            t[aux].valor_inicial =  t[aux].valor_inicial - valor;
+            printf("valor debitado");
+
         }
-        printf("Tarefa deletada\n\n");
-        return 0;
+        else{
+            printf("Senha invalida !\n");
+        }
+
+
     }
+
 }
-**/
-}
+

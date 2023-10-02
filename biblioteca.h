@@ -25,4 +25,6 @@ int le_informacoes(struct contas *armazena, int cont);
 void listar_contas(int cont, struct contas *t);
 
 int deletar(long cpf, int cont, struct contas *t);
+
+void debitar(long cpf, int cont, struct contas *t);
 #endif //UNTITLED_BIBLIOTECA_H
