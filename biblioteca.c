@@ -127,8 +127,6 @@ void debitar(long cpf, int cont, struct contas *t){
         printf("CPF inexistente.\n");
     }
 
-
-
     else{
         char senha_[200];
         printf("Digite a senha: ");
@@ -151,4 +149,32 @@ void debitar(long cpf, int cont, struct contas *t){
     }
 
 }
+
+void deposito(long cpf, int cont, struct contas *t){
+    int aux;
+
+    printf("Entre com o CPF que você deseja debitar um saldo: ");
+    scanf("%ld", &cpf);
+    printf("\n");
+    aux = buscar_cpf(cpf, t, cont);
+    //printf(" posicao: %d\n",aux);
+    if(aux == -1){
+        printf("CPF inexistente.\n");
+    }
+
+    else{
+        int valor;
+        printf("Digite o valor que você deseja depositar: ");
+        scanf("%d", &valor);
+        //printf("posicao: %d\n", aux);
+        t[aux].valor_inicial =  t[aux].valor_inicial + valor;
+        printf("valor depositado");
+
+    }
+
+
+
+}
+
+
 
