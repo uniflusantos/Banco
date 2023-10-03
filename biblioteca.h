@@ -20,7 +20,7 @@ int buscar_cpf(long cpf, struct contas*t, int cont);
 
 void limpa_buffer();
 
-int le_informacoes(struct contas *armazena, int cont);
+void le_informacoes(struct contas *armazena, int cont);
 
 void listar_contas(int cont, struct contas *t);
 

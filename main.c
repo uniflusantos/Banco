@@ -55,6 +55,8 @@ int main(void) {
         } else if (opcao == 5) {
             printf("\nVoce entrou na funcao de realizar depositos.\n");
             deposito(t[cont].cpf,cont,t);
+
+
         } else if (opcao == 6) {
             printf("\nVoce entrou na funcao de mostrar extrato.\n");
         } else if (opcao == 7) {
