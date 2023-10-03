@@ -30,4 +30,6 @@ void debitar(long cpf, int cont, struct contas *t);
 
 void deposito(long cpf, int cont, struct contas *t);
 
+void transferencia(long cpf, int cont, struct contas *t);
+
 #endif //UNTITLED_BIBLIOTECA_H

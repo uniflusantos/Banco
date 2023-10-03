@@ -59,8 +59,13 @@ int main(void) {
 
         } else if (opcao == 6) {
             printf("\nVoce entrou na funcao de mostrar extrato.\n");
+
+
         } else if (opcao == 7) {
             printf("\nVoce entrou na funcao de realizar transferencias.\n");
+            transferencia(t[cont].cpf, cont, t);
+
+
         } else if (opcao == 8) {
             printf("\nSaindo do programa");
             break;

@@ -185,5 +185,33 @@ void deposito(long cpf, int cont, struct contas *t){
     }
 }
 
+void transferencia(long cpf, int cont, struct contas *t){
+    int aux;
+    int valor;
 
+    printf("Entre o CPF de origem que fara a transferencia: ");
+    scanf("%ld", &cpf);
+    printf("\n");
+    aux = buscar_cpf(cpf, t, cont);
+    if(aux == -1){
+        printf("CPF inexistente.\n");
+    }
+    else{
+        printf("Digite o valor que deseja transferir: ");
+        scanf("%d", &valor);
+        t[aux].valor_inicial =  t[aux].valor_inicial - valor;
+    }
+    printf("Digite o CPF de destino que recebera a transferencia: ");
+    scanf("%ld", &cpf);
+    printf("\n");
+    aux = buscar_cpf(cpf, t, cont);
+    if (aux == -1){
+        printf("CPF inexistente.\n");
+    }
+    else{
+        t[aux].valor_inicial =  t[aux].valor_inicial + valor;
+        printf("Transferencia realizada com sucesso.\n");
+
+    }
+}
 
