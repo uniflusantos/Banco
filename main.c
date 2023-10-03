@@ -33,13 +33,14 @@ int main(void) {
             cont++;
 
             printf("Conta cadastrada com sucesso!\n");
-        } else if (opcao == 2) {
+        }
+
+        else if (opcao == 2) {
             printf("\nVoce entrou na funcao de deletar contas.\n");
             int verifica = deletar(t[cont].cpf,cont,t);
             if(verifica == 0){
                 cont--;
             }
-
         }
 
         else if (opcao == 3) {
@@ -51,22 +52,24 @@ int main(void) {
         else if (opcao == 4) {
             printf("\nVoce entrou na funcao de realizar debitos.\n");
             debitar(t[cont].cpf,cont,t);
+        }
 
-        } else if (opcao == 5) {
+        else if (opcao == 5) {
             printf("\nVoce entrou na funcao de realizar depositos.\n");
             deposito(t[cont].cpf,cont,t);
+        }
 
-
-        } else if (opcao == 6) {
+        else if (opcao == 6) {
             printf("\nVoce entrou na funcao de mostrar extrato.\n");
 
+        }
 
-        } else if (opcao == 7) {
+        else if (opcao == 7) {
             printf("\nVoce entrou na funcao de realizar transferencias.\n");
-            transferencia(t[cont].cpf, cont, t);
+            transferencia(t[cont].cpf, cont, t, t);
+        }
 
-
-        } else if (opcao == 8) {
+        else if (opcao == 8) {
             printf("\nSaindo do programa");
             break;
         }

@@ -149,17 +149,18 @@ void debitar(long cpf, int cont, struct contas *t){
             printf("Digite o valor que você deseja debitar: ");
             scanf("%d", &valor);
             //printf("posicao: %d\n", aux);
-            t[aux].valor_inicial =  t[aux].valor_inicial - valor;
-            printf("valor debitado");
-
+            if(t[aux].tipo_conta == 1 && t[aux].valor_inicial - valor < -1000){
+                printf("Sua conta não possui saldo suficiente para realizar esse debito.\n");
+            }
+            else if(t[aux].tipo_conta == 1 && t[aux].valor_inicial - valor > -1000){
+                t[aux].valor_inicial =  t[aux].valor_inicial - valor;
+                printf("valor debitado");
+            }
         }
         else{
             printf("Senha invalida !\n");
         }
-
-
     }
-
 }
 
 void deposito(long cpf, int cont, struct contas *t){
@@ -185,33 +186,47 @@ void deposito(long cpf, int cont, struct contas *t){
     }
 }
 
-void transferencia(long cpf, int cont, struct contas *t){
+int transferencia(long cpf, int cont, struct contas *t, struct contas *armazena) {
     int aux;
     int valor;
+    int teste;
+    long cpf_recebido;
+
 
     printf("Entre o CPF de origem que fara a transferencia: ");
     scanf("%ld", &cpf);
     printf("\n");
     aux = buscar_cpf(cpf, t, cont);
-    if(aux == -1){
+    if (aux == -1) {
         printf("CPF inexistente.\n");
+        return 1;
     }
-    else{
-        printf("Digite o valor que deseja transferir: ");
-        scanf("%d", &valor);
-        t[aux].valor_inicial =  t[aux].valor_inicial - valor;
+    else {
+        char senha_[200];
+        printf("Digite a senha: ");
+        scanf("%s", senha_);
+        int r = strcmp(senha_, t[aux].senha);
+        if (r == 0) {
+            printf("Digite o valor que deseja transferir: ");
+            scanf("%d", &valor);
+            t[aux].valor_inicial = t[aux].valor_inicial - valor;
+        } else {
+            printf("Senha Invalida.\n");
+            return 1;
+        }
     }
-    printf("Digite o CPF de destino que recebera a transferencia: ");
-    scanf("%ld", &cpf);
-    printf("\n");
-    aux = buscar_cpf(cpf, t, cont);
-    if (aux == -1){
-        printf("CPF inexistente.\n");
-    }
-    else{
-        t[aux].valor_inicial =  t[aux].valor_inicial + valor;
-        printf("Transferencia realizada com sucesso.\n");
+    do {
+        printf("Digite o CPF de destino que recebera a transferencia: ");
+        scanf("%ld", &cpf);
+        aux = buscar_cpf(cpf, t, cont);
+        if (aux == -1) {
+            printf("CPF invalido, tente novamente.\n");
+        }
+    } while (aux == -1);
 
-    }
+    t[aux].valor_inicial = t[aux].valor_inicial + valor;
+    printf("Transferencia realizada com sucesso.\n");
+    return 0;
 }
+
 

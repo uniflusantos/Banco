@@ -1,4 +1,4 @@
-//
+    //
 // Created by uniflusantos on 19/09/2023.
 //
 
@@ -30,6 +30,6 @@ void debitar(long cpf, int cont, struct contas *t);
 
 void deposito(long cpf, int cont, struct contas *t);
 
-void transferencia(long cpf, int cont, struct contas *t);
+int transferencia(long cpf, int cont, struct contas *t, struct contas *armazena);
 
 #endif //UNTITLED_BIBLIOTECA_H
