@@ -215,18 +215,35 @@ int transferencia(long cpf, int cont, struct contas *t, struct contas *armazena)
             return 1;
         }
     }
-    do {
+
         printf("Digite o CPF de destino que recebera a transferencia: ");
         scanf("%ld", &cpf);
         aux = buscar_cpf(cpf, t, cont);
+
         if (aux == -1) {
-            printf("CPF invalido, tente novamente.\n");
-        }
-    } while (aux == -1);
+            do {
+            printf("CPF invalido, deseja inserir outro? (Digite 1 para sim. Digite 2 para nao)\n");
+            scanf("%d", &teste);
+            if(teste == 1){
+                printf("Digite seu CPF novamente: ");
+                scanf("%ld", &cpf);
+                aux = buscar_cpf(cpf, t, cont);
+                t[aux].valor_inicial = t[aux].valor_inicial + valor;
+                return 1;
+            }
+            else if(teste == 2){
+                printf("Digite o CPF de destino que recebera a transferencia: ");
+                scanf("%ld", &cpf);
+                aux = buscar_cpf(cpf, t, cont);
+            }
+        }while (aux == -1);
+    }
 
     t[aux].valor_inicial = t[aux].valor_inicial + valor;
     printf("Transferencia realizada com sucesso.\n");
     return 0;
 }
+
+
 
 
