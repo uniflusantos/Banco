@@ -77,7 +77,7 @@ void le_informacoes(struct contas *armazena, int cont){
     limpa_buffer();
 
     printf("Digite o saldo inicial da conta: \n");
-    scanf("%d", &armazena[cont].valor_inicial);
+    scanf("%lf", &armazena[cont].valor_inicial);
     limpa_buffer();
 
     printf("Digite a senha: \n");
@@ -121,13 +121,13 @@ void listar_contas(int cont, struct contas *t){
         else if(t[x].tipo_conta == 2){
             printf("Tipo de conta: Plus\n");
         }
-        printf("Valor inicial: %d\n", t[x].valor_inicial);
+        printf("Valor inicial: %lf\n", t[x].valor_inicial);
         printf("Senha: %s\n\n", t[x].senha);
     }
 }
 
 
-void debitar(long cpf, int cont, struct contas *t){
+void debitar(long cpf, int cont, struct contas *t) {
     int aux;
 
     printf("Entre com o CPF que voce deseja debitar um saldo: ");
@@ -135,29 +135,31 @@ void debitar(long cpf, int cont, struct contas *t){
     printf("\n");
     aux = buscar_cpf(cpf, t, cont);
     //printf(" posicao: %d\n",aux); (debug)
-    if(aux == -1){
+    if (aux == -1) {
         printf("CPF nao registrado.\n\n");
-    }
-
-    else{
+    } else {
         char senha_[200];
         printf("Digite a senha: ");
-        scanf("%s",senha_);
-        int r = strcmp (senha_,t[aux].senha);
-        if(r == 0){
-            int valor;
+        scanf("%s", senha_);
+        int r = strcmp(senha_, t[aux].senha);
+        if (r == 0) {
+            double valor;
             printf("Digite o valor que voce deseja debitar: ");
-            scanf("%d", &valor);
+            scanf("%lf", &valor);
             //printf("posicao: %d\n", aux);
-            if(t[aux].tipo_conta == 1 && t[aux].valor_inicial - valor < -1000){
+            if (t[aux].tipo_conta == 1 && t[aux].valor_inicial - valor - (0.05 * valor) < -1000) {
                 printf("Sua conta nao possui saldo suficiente para realizar esse debito.\n\n");
-            }
-            else if(t[aux].tipo_conta == 1 && t[aux].valor_inicial - valor > -1000){
-                t[aux].valor_inicial =  t[aux].valor_inicial - valor;
+            } else if (t[aux].tipo_conta == 1 && t[aux].valor_inicial - valor - (0.05 * valor) > -1000) {
+                t[aux].valor_inicial = t[aux].valor_inicial - valor - (0.05 * valor);
+                printf("Valor debitado com sucesso!\n\n");
+            } else if (t[aux].tipo_conta == 2 && t[aux].valor_inicial - valor - (0.03 * valor) < -5000) {
+                printf("Sua conta nao possui saldo suficiente para realizar esse debito.\n\n");
+            } else if (t[aux].tipo_conta == 2 && t[aux].valor_inicial - valor - (0.03 * valor) > -5000) {
+                t[aux].valor_inicial = t[aux].valor_inicial - valor - (0.03 * valor);
                 printf("Valor debitado com sucesso!\n\n");
             }
         }
-        else{
+        else {
             printf("Senha invalida!\n\n");
         }
     }
@@ -220,7 +222,18 @@ int transferencia(long cpf, int cont, struct contas *t, struct contas *armazena)
         }
         printf("Digite o valor que deseja transferir: ");
         scanf("%d", &valor);
-        t[aux].valor_inicial = t[aux].valor_inicial - valor;
+        if (t[aux].tipo_conta == 1 && t[aux].valor_inicial - valor - (0.05 * valor) < -1000) {
+            printf("Sua conta nao possui saldo suficiente para realizar esse debito.\n\n");
+        }
+        else if (t[aux].tipo_conta == 1 && t[aux].valor_inicial - valor - (0.05 * valor) > -1000) {
+            t[aux].valor_inicial = t[aux].valor_inicial - valor - (0.05 * valor);
+        }
+        else if (t[aux].tipo_conta == 2 && t[aux].valor_inicial - valor - (0.03 * valor) < -5000) {
+            printf("Sua conta nao possui saldo suficiente para realizar esse debito.\n\n");
+        }
+        else if (t[aux].tipo_conta == 2 && t[aux].valor_inicial - valor - (0.03 * valor) > -5000) {
+            t[aux].valor_inicial = t[aux].valor_inicial - valor - (0.03 * valor);
+        }
         t[aux2].valor_inicial = t[aux2].valor_inicial + valor;
         printf("Transferencia realizada com sucesso!\n\n");
         return 0;
