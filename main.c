@@ -61,6 +61,7 @@ int main(void) {
 
         else if (opcao == 6) {
             printf("\nVoce entrou na funcao de mostrar extrato.\n");
+            extrato(t[cont].cpf,cont,t);
 
         }
 

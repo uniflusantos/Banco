@@ -11,7 +11,18 @@ struct contas{
     int tipo_conta;
     double valor_inicial;
     char senha[100];
+
+
 };
+
+struct extrato{
+
+    int entrada;
+    int saida;
+    int juros;
+
+};
+
 
 
 
@@ -31,5 +42,7 @@ void debitar(long cpf, int cont, struct contas *t);
 void deposito(long cpf, int cont, struct contas *t);
 
 int transferencia(long cpf, int cont, struct contas *t, struct contas *armazena);
+
+void extrato(long cpf, int cont, struct contas *t);
 
 #endif //UNTITLED_BIBLIOTECA_H
