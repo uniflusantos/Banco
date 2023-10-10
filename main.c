@@ -1,11 +1,12 @@
-    #include "biblioteca.h"
+#include "biblioteca.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 int main(void) {
-    struct contas t[1000];
+    Contas *t = malloc(sizeof(Contas)*1000);
     int cont = 0;
+    cont = le_binario(t);
     int posicao = 0;
 
     while (1) {
@@ -45,7 +46,6 @@ int main(void) {
 
         else if (opcao == 3) {
             printf("\nVoce entrou na funcao de listar clientes.\n\n");
-            printf("Lista de Contas: \n\n");
             listar_contas(cont, t);
         }
 
@@ -61,10 +61,8 @@ int main(void) {
 
         else if (opcao == 6) {
             printf("\nVoce entrou na funcao de mostrar extrato.\n");
-            extrato(t[cont].cpf,cont,t);
-
+            extrato_funcao(t[cont].cpf,cont,t);
         }
-
         else if (opcao == 7) {
             printf("\nVoce entrou na funcao de realizar transferencias.\n");
             transferencia(t[cont].cpf, cont, t, t);
@@ -72,7 +70,9 @@ int main(void) {
 
         else if (opcao == 8) {
             printf("\nSaindo do programa");
+            escreve_binario(t, cont);
             break;
         }
     }
+
 }

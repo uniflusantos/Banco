@@ -32,7 +32,7 @@ int buscar_cpf(long cpf, struct contas*t, int cont){
     printf("cpf passado: %ld\n", cpf);
     printf("cpf armazenado: %ld\n", armazena[i].cpf);
     if(armazena[i].cpf == cpf){
-      saida = 1;  
+      saida = 1;
     }
   }
   printf("saida: %d\n", saida);
@@ -83,6 +83,8 @@ void le_informacoes(struct contas *armazena, int cont){
     printf("Digite a senha: \n");
     scanf(" %[^\n]", armazena[cont].senha);
     limpa_buffer();
+    armazena[cont].operacoes = 0;
+
 }
 
 
@@ -93,6 +95,7 @@ int deletar(long cpf, int cont, struct contas *t) {
     //buscar_cpf(cpf_recebido, armazena,cont); (debug)
     if(cont ==0){
         printf("Nao existem contas cadastradas ainda.");
+        return 1;
     }
     else {
         int teste;
@@ -120,6 +123,7 @@ void listar_contas(int cont, struct contas *t){
     }
     else {
         for (int x = 0; x < cont; x++) {
+            printf("Lista de Contas: \n\n");
             printf("Conta %d\n", x + 1);
             printf("Nome: %s\n", t[x].nome);
             printf("CPF: %ld\n", t[x].cpf);
@@ -138,7 +142,7 @@ void listar_contas(int cont, struct contas *t){
 void debitar(long cpf, int cont, struct contas *t) {
     int aux;
     if (cont == 0) {
-        printf("Nao existem contas cadastradas ainda.");
+        printf("Nao existem contas cadastradas ainda.\n");
     }
     else {
 
@@ -161,14 +165,29 @@ void debitar(long cpf, int cont, struct contas *t) {
                 //printf("posicao: %d\n", aux);
                 if (t[aux].tipo_conta == 1 && t[aux].valor_inicial - valor - (0.05 * valor) < -1000) {
                     printf("Sua conta nao possui saldo suficiente para realizar esse debito.\n\n");
-                } else if (t[aux].tipo_conta == 1 && t[aux].valor_inicial - valor - (0.05 * valor) > -1000) {
+                }
+                else if (t[aux].tipo_conta == 1 && t[aux].valor_inicial - valor - (0.05 * valor) > -1000) {
                     t[aux].valor_inicial = t[aux].valor_inicial - valor - (0.05 * valor);
                     printf("Valor debitado com sucesso!\n\n");
+                    t[aux].lista[t[aux].operacoes].tipo = 1;
+                    t[aux].lista[t[aux].operacoes].cpf_origem = t[aux].cpf;
+                    t[aux].lista[t[aux].operacoes].saida = valor + (0.05 * valor);
+                    t[aux].lista[t[aux].operacoes].juros = 0.05 * valor;
+                    t[aux].operacoes++;
+
+
                 } else if (t[aux].tipo_conta == 2 && t[aux].valor_inicial - valor - (0.03 * valor) < -5000) {
                     printf("Sua conta nao possui saldo suficiente para realizar esse debito.\n\n");
+
                 } else if (t[aux].tipo_conta == 2 && t[aux].valor_inicial - valor - (0.03 * valor) > -5000) {
                     t[aux].valor_inicial = t[aux].valor_inicial - valor - (0.03 * valor);
                     printf("Valor debitado com sucesso!\n\n");
+                    t[aux].lista[t[aux].operacoes].tipo = 1;
+                    t[aux].lista[t[aux].operacoes].cpf_origem = t[aux].cpf;
+                    t[aux].lista[t[aux].operacoes].saida = valor + (0.03 * valor);
+                    t[aux].lista[t[aux].operacoes].juros = 0.03 * valor;
+
+                    t[aux].operacoes++;
                 }
             } else {
                 printf("Senha invalida!\n\n");
@@ -176,7 +195,7 @@ void debitar(long cpf, int cont, struct contas *t) {
         }
     }
 }
-void deposito(long cpf, int cont, struct contas *t){
+void deposito(long cpf, int cont, struct contas *t ){
     int aux;
     if(cont == 0){
         printf("Nao existem contas cadastradas ainda.");
@@ -191,11 +210,17 @@ void deposito(long cpf, int cont, struct contas *t){
         if (aux == -1) {
             printf("CPF nao registrado.\n\n");
         } else {
-            int valor;
+            double valor;
             printf("Digite o valor que voce deseja depositar: ");
-            scanf("%d", &valor);
+            scanf("%lf", &valor);
             //printf("posicao: %d\n", aux); (debug)
             t[aux].valor_inicial = t[aux].valor_inicial + valor;
+            t[aux].lista[t[aux].operacoes].tipo = 2;
+            t[aux].lista[t[aux].operacoes].cpf_destino = t[aux].cpf;
+            t[aux].lista[t[aux].operacoes].entrada = valor;
+            t[aux].operacoes++;
+
+
             printf("Valor depositado com sucesso!\n\n");
 
         }
@@ -210,11 +235,13 @@ int transferencia(long cpf, int cont, struct contas *t, struct contas *armazena)
     long cpf_recebido;
     if(cont < 1){
         printf("Nao existem contas o suficiente para transferir.");
+        return 1;
     }
     else {
 
 
         printf("Entre o CPF de origem que fara a transferencia: ");
+
         scanf("%ld", &cpf);
         printf("\n");
         aux = buscar_cpf(cpf, t, cont);
@@ -243,19 +270,37 @@ int transferencia(long cpf, int cont, struct contas *t, struct contas *armazena)
                 printf("Sua conta nao possui saldo suficiente para realizar esse debito.\n\n");
             } else if (t[aux].tipo_conta == 1 && t[aux].valor_inicial - valor - (0.05 * valor) > -1000) {
                 t[aux].valor_inicial = t[aux].valor_inicial - valor - (0.05 * valor);
+                t[aux].lista[t[aux].operacoes].tipo = 3;
+                t[aux].lista[t[aux].operacoes].cpf_origem = t[aux].cpf;
+                t[aux].lista[t[aux].operacoes].cpf_destino = t[aux2].cpf;
+                t[aux].lista[t[aux].operacoes].saida = valor + (0.05 * valor);
+                t[aux].lista[t[aux].operacoes].juros = 0.05 * valor;
+                t[aux].operacoes++;
             } else if (t[aux].tipo_conta == 2 && t[aux].valor_inicial - valor - (0.03 * valor) < -5000) {
                 printf("Sua conta nao possui saldo suficiente para realizar esse debito.\n\n");
             } else if (t[aux].tipo_conta == 2 && t[aux].valor_inicial - valor - (0.03 * valor) > -5000) {
                 t[aux].valor_inicial = t[aux].valor_inicial - valor - (0.03 * valor);
+                t[aux].lista[t[aux].operacoes].tipo = 3;
+                t[aux].lista[t[aux].operacoes].cpf_origem = t[aux].cpf;
+                t[aux].lista[t[aux].operacoes].cpf_destino = t[aux2].cpf;
+                t[aux].lista[t[aux].operacoes].saida = valor + (0.03 * valor);
+                t[aux].lista[t[aux].operacoes].juros = 0.03 * valor;
+                t[aux].operacoes++;
             }
             t[aux2].valor_inicial = t[aux2].valor_inicial + valor;
+            t[aux2].lista[t[aux2].operacoes].tipo = 4;
+            t[aux2].lista[t[aux2].operacoes].cpf_origem = t[aux].cpf;
+            t[aux2].lista[t[aux2].operacoes].cpf_destino = t[aux2].cpf;
+            t[aux2].lista[t[aux2].operacoes].entrada = valor;
+            t[aux2].operacoes++;
             printf("Transferencia realizada com sucesso!\n\n");
             return 0;
         }
     }
 }
 
-void extrato(long cpf, int cont, struct contas *t){
+
+void extrato_funcao(long cpf, int cont, struct contas *t){
     if(cont == 0){
         printf("Nao existem contas cadastradas ainda.");
     }
@@ -273,9 +318,41 @@ void extrato(long cpf, int cont, struct contas *t){
             scanf("%s", senha_);
             int r = strcmp(senha_, t[verifica].senha);
             if (r == 0) {
-                printf("Extrato aqui. \n");
+                printf("Extrato aqui: \n");
+                for(int i = 0 ; i < t[verifica].operacoes;i++){
+                    if(t[verifica].lista[i].tipo ==  2){
+                        printf("Data do safado:\n");
+                        printf("Valor depositado: %.2lf\n",t[verifica].lista[i].entrada);
+                        printf("CPF de destino: %ld\n",t[verifica].lista[i].cpf_destino);
+                    }
+                    else if (t[verifica].lista[i].tipo ==  1){
+                        printf("Data do safado:\n");
+                        printf("Valor debitado: %.2lf\n",t[verifica].lista[i].saida);
+                        printf("CPF de origem: %ld\n",t[verifica].lista[i].cpf_origem);
+                        printf("Juros: %.2lf\n", t[verifica].lista[i].juros);
+
+                    }
+                    else if(t[verifica].lista[i].tipo ==  3){
+                        printf("Data do safado:\n");
+                        printf("Valor transferido: %.2lf\n",t[verifica].lista[i].saida-t[verifica].lista[i].juros);
+                        printf("da conta do CPF : %ld\n",t[verifica].lista[i].cpf_origem);
+                        printf("para a conta do  CPF : %ld\n",t[verifica].lista[i].cpf_destino);
+                        printf("Juros: %.2lf\n", t[verifica].lista[i].juros);
+
+                    }
+
+                    else if(t[verifica].lista[i].tipo ==  4){
+                        printf("Data do safado:\n");
+                        printf("Valor recebido: %.2lf\n",t[verifica].lista[i].entrada);
+                        printf("da conta do CPF : %ld\n",t[verifica].lista[i].cpf_origem);
+                        printf("para a conta do  CPF : %ld\n",t[verifica].lista[i].cpf_destino);
+
+
+                    }
+                }
+
             } else {
-                printf("senha inavlida!\n");
+                printf("senha invalida!\n");
             }
 
         }
@@ -283,6 +360,32 @@ void extrato(long cpf, int cont, struct contas *t){
     }
 }
 
+int le_binario(struct contas *t) {
+    FILE *arquivo_binario = fopen("binario.txt", "rb");
+    int y = 0;
+    if (arquivo_binario) {
+        while (fread(&t[y], sizeof(struct contas), 1, arquivo_binario) == 1) {
+            y++;
+        }
+        return y;
 
+    }
+    return 0;
+}
+
+void escreve_binario(struct contas *t, int cont) {
+    FILE *arquivo_binario;
+    arquivo_binario = fopen("binario.txt", "wb");
+    //printf("%p\n", arquivo_binario);
+    if (arquivo_binario) {
+        //printf("entrou\n");
+
+        //printf("%d\n", t->prioridade);
+        fwrite(t, sizeof(struct contas), cont, arquivo_binario);
+
+        fclose(arquivo_binario);
+    }
+
+}
 
 

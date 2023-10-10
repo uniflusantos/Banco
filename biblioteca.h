@@ -1,27 +1,34 @@
-    //
+//
 // Created by uniflusantos on 19/09/2023.
 //
 
 #ifndef UNTITLED_BIBLIOTECA_H
 #define UNTITLED_BIBLIOTECA_H
 
-struct contas{
+typedef struct extrato {
+    long cpf_origem;
+    long cpf_destino;
+    double entrada;
+    double saida;
+    double juros;
+    int tipo;
+
+
+}extrato;
+
+typedef struct contas{
     char nome[100];
     long cpf;
     int tipo_conta;
     double valor_inicial;
     char senha[100];
+    struct extrato lista[100];
+    int operacoes;
 
 
-};
+}Contas;
 
-struct extrato{
 
-    int entrada;
-    int saida;
-    int juros;
-
-};
 
 
 
@@ -43,6 +50,10 @@ void deposito(long cpf, int cont, struct contas *t);
 
 int transferencia(long cpf, int cont, struct contas *t, struct contas *armazena);
 
-void extrato(long cpf, int cont, struct contas *t);
+void extrato_funcao(long cpf, int cont, struct contas *t);
+
+int le_binario(struct contas *t);
+
+void escreve_binario(struct contas *t, int cont);
 
 #endif //UNTITLED_BIBLIOTECA_H
