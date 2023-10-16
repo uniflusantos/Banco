@@ -10,7 +10,7 @@ int main(void) {
     int posicao = 0;
 
     while (1) {
-        printf("Menu de opcoes\n\n");
+        printf("\nMenu de opcoes\n\n");
         printf("1 - Criar conta\n");
         printf("2 - Deletar conta\n");
         printf("3 - Listar Clientes\n");
