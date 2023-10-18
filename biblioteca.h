@@ -42,13 +42,13 @@ void le_informacoes(struct contas *armazena, int cont);
 
 void listar_contas(int cont, struct contas *t);
 
-int deletar(long cpf, int cont, struct contas *t);
+int deletar(int cont, struct contas *t);
 
-void debitar(long cpf, int cont, struct contas *t);
+void debitar(int cont, struct contas *t);
 
-void deposito(long cpf, int cont, struct contas *t);
+void deposito(int cont, struct contas *t);
 
-int transferencia(long cpf, int cont, struct contas *t, struct contas *armazena);
+int transferencia(int cont, struct contas *t);
 
 void extrato_funcao(long cpf, int cont, struct contas *t);
 

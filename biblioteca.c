@@ -89,10 +89,13 @@ void le_informacoes(struct contas *armazena, int cont){
 
 
 
-int deletar(long cpf, int cont, struct contas *t) {
+int deletar(int cont, struct contas *t) {
     //printf("Entre com o CPF que vpcê deseja deletar: "); (debug)
     //scanf("%ld", &cpf); (debug)
     //buscar_cpf(cpf_recebido, armazena,cont); (debug)
+
+    long cpf;
+
     if(cont ==0){
         printf("Nao existem contas cadastradas ainda.");
         limpa_buffer();
@@ -141,7 +144,8 @@ void listar_contas(int cont, struct contas *t){
 }
 
 
-void debitar(long cpf, int cont, struct contas *t) {
+void debitar(int cont, struct contas *t) {
+    long cpf;
     int aux;
     if (cont == 0) {
         printf("Nao existem contas cadastradas ainda.\n");
@@ -202,7 +206,8 @@ void debitar(long cpf, int cont, struct contas *t) {
         }
     }
 }
-void deposito(long cpf, int cont, struct contas *t ){
+void deposito(int cont, struct contas *t ){
+    long cpf;
     int aux;
     if(cont == 0){
         printf("Nao existem contas cadastradas ainda.");
@@ -236,12 +241,11 @@ void deposito(long cpf, int cont, struct contas *t ){
     }
 }
 
-int transferencia(long cpf, int cont, struct contas *t, struct contas *armazena) {
-    int aux;
+int transferencia(int cont, struct contas *t) {
+    long cpf;
     int valor;
-    int teste;
+    int aux;
     int aux2;
-    long cpf_recebido;
     if(cont < 1){
         printf("Nao existem contas o suficiente para transferir.");
         limpa_buffer();

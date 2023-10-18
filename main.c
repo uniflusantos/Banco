@@ -38,7 +38,7 @@ int main(void) {
 
         else if (opcao == 2) {
             printf("\nVoce entrou na funcao de deletar contas.\n");
-            int verifica = deletar(t[cont].cpf,cont,t);
+            int verifica = deletar(cont,t);
             if(verifica == 0){
                 cont--;
             }
@@ -51,12 +51,12 @@ int main(void) {
 
         else if (opcao == 4) {
             printf("\nVoce entrou na funcao de realizar debitos.\n");
-            debitar(t[cont].cpf,cont,t);
+            debitar(cont,t);
         }
 
         else if (opcao == 5) {
             printf("\nVoce entrou na funcao de realizar depositos.\n");
-            deposito(t[cont].cpf,cont,t);
+            deposito(cont,t);
         }
 
         else if (opcao == 6) {
@@ -65,7 +65,7 @@ int main(void) {
         }
         else if (opcao == 7) {
             printf("\nVoce entrou na funcao de realizar transferencias.\n");
-            transferencia(t[cont].cpf, cont, t, t);
+            transferencia(cont, t);
         }
 
         else if (opcao == 8) {
