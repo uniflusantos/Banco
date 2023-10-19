@@ -50,7 +50,7 @@ void deposito(int cont, struct contas *t);
 
 int transferencia(int cont, struct contas *t);
 
-void extrato_funcao(long cpf, int cont, struct contas *t);
+void extrato_funcao(int cont, struct contas *t);
 
 int le_binario(struct contas *t);
 

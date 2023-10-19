@@ -61,7 +61,7 @@ int main(void) {
 
         else if (opcao == 6) {
             printf("\nVoce entrou na funcao de mostrar extrato.\n");
-            extrato_funcao(t[cont].cpf,cont,t);
+            extrato_funcao(cont,t);
         }
         else if (opcao == 7) {
             printf("\nVoce entrou na funcao de realizar transferencias.\n");
