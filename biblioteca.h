@@ -52,7 +52,7 @@ int transferencia(int cont, struct contas *t);
 
 void extrato_funcao(int cont, struct contas *t);
 
-int le_binario(struct contas *t);
+int le_binario(struct contas *t, int *cont);
 
 void escreve_binario(struct contas *t, int cont);
 

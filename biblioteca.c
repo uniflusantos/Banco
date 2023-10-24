@@ -385,30 +385,41 @@ void extrato_funcao(int cont, struct contas *t){
     }
 }
 
-int le_binario(struct contas *t) {
-    FILE *arquivo_binario = fopen("binario.txt", "rb");
-    int y = 0;
+int le_binario(struct contas *t, int *cont) {
+    FILE *arquivo_binario;
+    arquivo_binario = fopen("binario", "rb");
     if (arquivo_binario) {
-        while (fread(&t[y], sizeof(struct contas), 1, arquivo_binario) == 1) {
-            y++;
-        }
-        return y;
 
+        fread(cont, sizeof(int), 1, arquivo_binario);
+        //printf("%d\n", *cont);
+
+
+
+        fread(t, sizeof(struct contas), 1000, arquivo_binario);
+
+        return 0;
     }
-    return 0;
+    else{
+        return 1;
+    }
 }
 
 void escreve_binario(struct contas *t, int cont) {
     FILE *arquivo_binario;
-    arquivo_binario = fopen("binario.txt", "wb");
+    arquivo_binario = fopen("binario", "wb");
     //printf("%p\n", arquivo_binario);
     if (arquivo_binario) {
         //printf("entrou\n");
 
         //printf("%d\n", t->prioridade);
-        fwrite(t, sizeof(struct contas), cont, arquivo_binario);
+        fwrite(&cont, sizeof(int), 1, arquivo_binario);
+
+        fwrite(t, sizeof(struct contas), 1000, arquivo_binario);
 
         fclose(arquivo_binario);
+    }
+    else{
+        printf("Erro ao abrir o arquivo\n");
     }
 
 }

@@ -6,8 +6,7 @@
 int main(void) {
     Contas *t = malloc(sizeof(Contas)*1000);
     int cont = 0;
-    cont = le_binario(t);
-    int posicao = 0;
+    le_binario(t, &cont);
 
     while (1) {
         printf("\nMenu de opcoes\n\n");
