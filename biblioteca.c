@@ -46,7 +46,6 @@ void le_informacoes(struct contas *armazena, int cont){
     long cpf_recebido;
     int teste;
     int teste_conta;
-    if(cont>=0){
         do{
             printf("Digite seu CPF: \n");
             scanf("%ld", &cpf_recebido);
@@ -55,7 +54,6 @@ void le_informacoes(struct contas *armazena, int cont){
                 printf("CPF invalido, tente novamente.\n");
             }
         }while(teste > -1);
-    };
 
     armazena[cont].cpf = cpf_recebido;
 
@@ -97,7 +95,7 @@ int deletar(int cont, struct contas *t) {
     long cpf;
 
     if(cont ==0){
-        printf("Nao existem contas cadastradas ainda.");
+        printf("Nao existem contas cadastradas ainda.\n");
         return 1;
     }
     else {
@@ -123,7 +121,7 @@ int deletar(int cont, struct contas *t) {
 
 void listar_contas(int cont, struct contas *t){
     if(cont ==0){
-        printf("Nao existem contas cadastradas ainda.");
+        printf("Nao existem contas cadastradas ainda.\n");
     }
     else {
         printf("Lista de Contas: \n\n");
@@ -208,7 +206,7 @@ void deposito(int cont, struct contas *t ){
     long cpf;
     int aux;
     if(cont == 0){
-        printf("Nao existem contas cadastradas ainda.");
+        printf("Nao existem contas cadastradas ainda.\n");
     }
     else {
 
@@ -244,7 +242,7 @@ int transferencia(int cont, struct contas *t) {
     int aux;
     int aux2;
     if(cont < 1){
-        printf("Nao existem contas o suficiente para transferir.");
+        printf("Nao existem contas o suficiente para transferir.\n");
         return 1;
     }
     else {
@@ -323,7 +321,7 @@ void extrato_funcao(int cont, struct contas *t){
     long cpf;
 
     if(cont == 0){
-        printf("Nao existem contas cadastradas ainda.");
+        printf("Nao existem contas cadastradas ainda.\n");
         //limpa_buffer();
     }
     else {
@@ -341,38 +339,40 @@ void extrato_funcao(int cont, struct contas *t){
             scanf("%s", senha_);
             int r = strcmp(senha_, t[verifica].senha);
             if (r == 0) {
-                printf("\nExtrato aqui: \n\n");
+                FILE *f = fopen("extrato.txt", "wb");
+                fprintf(f, "\nExtrato aqui: \n\n");
                 for(int i = 0 ; i < t[verifica].operacoes;i++){
                     if(t[verifica].lista[i].tipo ==  2){
-                        printf("Valor depositado: %.2lf\n",t[verifica].lista[i].entrada);
-                        printf("CPF de destino: %ld\n \n \n",t[verifica].lista[i].cpf_destino);
+                        fprintf(f, "Valor depositado: %.2lf\n",t[verifica].lista[i].entrada);
+                        fprintf(f, "CPF de destino: %ld\n \n \n",t[verifica].lista[i].cpf_destino);
 
 
                     }
                     else if (t[verifica].lista[i].tipo ==  1){
-                        printf("Valor debitado: %.2lf\n",t[verifica].lista[i].saida - t[verifica].lista[i].juros);
-                        printf("CPF de origem: %ld\n",t[verifica].lista[i].cpf_origem);
-                        printf("Juros: %.2lf\n \n \n", t[verifica].lista[i].juros);
+                        fprintf(f, "Valor debitado: %.2lf\n",t[verifica].lista[i].saida - t[verifica].lista[i].juros);
+                        fprintf(f, "CPF de origem: %ld\n",t[verifica].lista[i].cpf_origem);
+                        fprintf(f, "Juros: %.2lf\n \n \n", t[verifica].lista[i].juros);
 
                     }
                     else if(t[verifica].lista[i].tipo ==  3){
 
-                        printf("Valor transferido: %.2lf\n",t[verifica].lista[i].saida-t[verifica].lista[i].juros);
-                        printf("da conta do CPF : %ld\n",t[verifica].lista[i].cpf_origem);
-                        printf("para a conta do  CPF : %ld\n",t[verifica].lista[i].cpf_destino);
-                        printf("Juros: %.2lf\n \n \n", t[verifica].lista[i].juros);
+                        fprintf(f, "Valor transferido: %.2lf\n",t[verifica].lista[i].saida-t[verifica].lista[i].juros);
+                        fprintf(f, "da conta do CPF : %ld\n",t[verifica].lista[i].cpf_origem);
+                        fprintf(f, "para a conta do  CPF : %ld\n",t[verifica].lista[i].cpf_destino);
+                        fprintf(f, "Juros: %.2lf\n \n \n", t[verifica].lista[i].juros);
 
                     }
 
                     else if(t[verifica].lista[i].tipo ==  4){
 
-                        printf("Valor recebido: %.2lf\n",t[verifica].lista[i].entrada);
-                        printf("da conta do CPF : %ld\n",t[verifica].lista[i].cpf_origem);
-                        printf("para a conta do  CPF : %ld\n \n \n",t[verifica].lista[i].cpf_destino);
+                        fprintf(f,"Valor recebido: %.2lf\n",t[verifica].lista[i].entrada);
+                        fprintf(f,"da conta do CPF : %ld\n",t[verifica].lista[i].cpf_origem);
+                        fprintf(f,"para a conta do  CPF : %ld\n \n \n",t[verifica].lista[i].cpf_destino);
 
 
                     }
                 }
+                fclose(f);
 
             }
             else {
