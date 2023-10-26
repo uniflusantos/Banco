@@ -72,6 +72,9 @@ int main(void) {
             escreve_binario(t, cont);
             break;
         }
+        else if (opcao > 8 || p == s_opcao || *p != '\n' || opcao < 1) {
+            printf("Input invalido. Entre somente com valores inteiros entre 1 e 8.\n\n");
+        }
     }
 
 }
