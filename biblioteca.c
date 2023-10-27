@@ -241,7 +241,7 @@ int transferencia(int cont, struct contas *t) {
     int valor;
     int aux;
     int aux2;
-    if(cont < 1){
+    if(cont <= 1){
         printf("Nao existem contas o suficiente para transferir.\n");
         return 1;
     }
