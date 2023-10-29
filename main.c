@@ -1,3 +1,5 @@
+//Lucas Roberto Boccia dos Santos - 22.123.012-1
+//Tiago Fagundes dos Santos - 22.123.017-0
 #include "biblioteca.h"
 #include <stdio.h>
 #include <stdlib.h>
